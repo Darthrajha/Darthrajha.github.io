@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rajeev Kotha</title>
+    <meta name="description" content="Rajeev Kotha - Building Energy and Data Science. Vancouver, BC.">
+
+    <!-- Robots -->
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website">
+    <meta property="og:title"       content="Rajeev Kotha">
+    <meta property="og:description" content="Building energy and data science. I model buildings and build tools that help decarbonise them.">
+    <meta property="og:url"         content="https://darthrajha.github.io">
+
+    <!-- Mobile browser chrome colour -->
+    <meta name="theme-color" content="#F5EDD8">
+
+    <!-- Favicon: RK monogram -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23F5EDD8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Georgia%2C serif' font-size='14' font-weight='600' fill='%232D1B0E'%3ERK%3C/text%3E%3C/svg%3E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* ── Variables ── */
+        :root {
+            --bg:       #F5EDD8;
+            --ink:      #2D1B0E;
+            --muted:    #7A6255;
+            --faint:    #AE9882;
+            --accent:   #8B4513;
+            --rule:     #D9CDB8;
+            --tab-h:    36px;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            background: var(--bg);
+            color: var(--ink);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Subtle grain overlay for aged-paper feel */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* ── Layout ── */
+        main {
+            max-width: 680px; margin: 0 auto;
+            padding: 3.5rem 1.75rem 5rem;
+        }
+
+        /* ── Intro ── */
+        .intro { margin-bottom: 2.25rem; }
+
+        .intro-name {
+            font-family: 'Libre Caslon Display', serif;
+            font-size: clamp(2.4rem, 6vw, 3.4rem);
+            font-weight: 400; letter-spacing: 0.01em;
+            line-height: 1.05; color: var(--ink);
+            margin-bottom: 0.3rem;
+        }
+        .intro-meta {
+            font-size: 0.78rem; color: var(--faint);
+            font-family: 'IBM Plex Mono', monospace;
+            margin-bottom: 1.25rem;
+        }
+        .intro-bio {
+            font-size: 0.875rem; color: var(--ink);
+            line-height: 1.75; margin-bottom: 0.45rem;
+            max-width: 580px;
+        }
+        .intro-bio.secondary { color: var(--muted); }
+        .intro-links {
+            display: flex; gap: 1.25rem; flex-wrap: wrap;
+            margin-top: 1.125rem;
+        }
+        .intro-link {
+            font-size: 0.8rem; font-weight: 500;
+            color: var(--accent); text-decoration: none;
+            display: inline-flex; align-items: center; gap: 0.35rem;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.15s;
+        }
+        .intro-link:hover { border-color: var(--accent); }
+
+        /* ── Tabs ── */
+        .tabs-bar {
+            display: flex;
+            border-bottom: 1px solid var(--rule);
+            margin-bottom: 1.75rem;
+        }
+        .tab-btn {
+            background: none; border: none; cursor: pointer;
+            padding: 0 1rem; height: var(--tab-h);
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 0.8rem; font-weight: 400;
+            color: var(--muted);
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: color 0.15s, border-color 0.15s;
+            white-space: nowrap;
+        }
+        .tab-btn:hover { color: var(--ink); }
+        .tab-btn.active {
+            color: var(--ink); font-weight: 500;
+            border-bottom-color: var(--accent);
+        }
+        .tab-btn:first-child { padding-left: 0; }
+
+        /* ── Panels ── */
+        .tab-panel { display: none; }
+        .tab-panel.active {
+            display: block;
+            animation: tab-fade-in 0.15s ease;
+        }
+        @keyframes tab-fade-in {
+            from { opacity: 0; transform: translateY(3px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .tab-panel a { font-weight: 500; }
+
+        /* ── Section label with extending rule ── */
+        .s-label {
+            font-size: 0.67rem; font-weight: 500;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--faint); margin-bottom: 1.25rem;
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        .s-label::after {
+            content: ''; flex: 1;
+            height: 1px; background: var(--rule);
+        }
+
+        /* ── Experience list ── */
+        .exp-list { display: flex; flex-direction: column; }
+        .exp-item {
+            position: relative;
+            padding: 1.375rem 0;
+            border-bottom: 1px solid var(--rule);
+        }
+        .exp-item:first-child { border-top: 1px solid var(--rule); }
+        .exp-item::before {
+            content: '';
+            position: absolute;
+            left: -1.75rem; top: 0; bottom: 0;
+            width: 2px;
+            background: var(--accent);
+            transform: scaleY(0);
+            transform-origin: center;
+            transition: transform 0.2s ease;
+        }
+        .exp-item:hover::before { transform: scaleY(1); }
+        .exp-row {
+            display: flex; justify-content: space-between;
+            align-items: baseline; gap: 1rem; margin-bottom: 0.15rem;
+        }
+        .exp-role {
+            font-size: 0.875rem; font-weight: 500; color: var(--ink);
+        }
+        .exp-period {
+            font-size: 0.72rem; color: var(--faint); flex-shrink: 0;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+        .exp-org {
+            font-size: 0.785rem; color: var(--muted); margin-bottom: 0.45rem;
+            display: flex; align-items: center; gap: 0.4rem;
+        }
+        .exp-org a {
+            color: inherit; text-decoration: none;
+            border-bottom: 1px solid var(--rule);
+            transition: border-color 0.15s;
+        }
+        .exp-org a:hover { border-color: var(--muted); }
+        .exp-desc {
+            font-size: 0.84rem; color: var(--muted);
+            line-height: 1.55; max-width: 560px;
+        }
+        .exp-desc a {
+            color: inherit; text-decoration: underline;
+            text-underline-offset: 2px; text-decoration-color: var(--rule);
+            transition: text-decoration-color 0.15s;
+        }
+        .exp-desc a:hover { text-decoration-color: var(--muted); }
+
+        /* ── Publications ── */
+        .pub-list { list-style: none; display: flex; flex-direction: column; }
+        .pub-item {
+            display: grid; grid-template-columns: 1.25rem 1fr;
+            gap: 0 0.625rem;
+            padding: 0.975rem 0;
+            border-bottom: 1px solid var(--rule);
+        }
+        .pub-item:first-child { border-top: 1px solid var(--rule); }
+        .pub-n {
+            font-size: 0.72rem; color: var(--faint);
+            padding-top: 0.1rem;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+        .pub-title {
+            font-size: 0.875rem; color: var(--ink);
+            font-style: italic;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            text-decoration-color: var(--rule);
+            transition: color 0.15s, text-decoration-color 0.15s;
+        }
+        .pub-title:hover { color: var(--accent); text-decoration-color: var(--accent); }
+        .pub-meta {
+            font-size: 0.75rem; color: var(--faint); margin-top: 0.2rem;
+        }
+
+        /* ── Skills ── */
+        .skill-table { display: flex; flex-direction: column; }
+        .skill-row {
+            display: grid; grid-template-columns: 9rem 1fr;
+            gap: 0 1.5rem; align-items: baseline;
+            padding: 0.875rem 0;
+            border-bottom: 1px solid var(--rule);
+        }
+        .skill-row:first-child { border-top: 1px solid var(--rule); }
+        .skill-cat { font-size: 0.82rem; font-weight: 500; color: var(--ink); }
+        .skill-vals { font-size: 0.835rem; color: var(--muted); line-height: 1.6; }
+
+        /* ── Education / Credentials ── */
+        .cred-table { display: flex; flex-direction: column; margin-bottom: 2rem; }
+        .cred-row {
+            display: flex; justify-content: space-between;
+            align-items: baseline; gap: 1.5rem;
+            padding: 0.875rem 0; border-bottom: 1px solid var(--rule);
+        }
+        .cred-row:first-child { border-top: 1px solid var(--rule); }
+        .cred-name { font-size: 0.85rem; color: var(--ink); line-height: 1.4; }
+        .cred-right {
+            font-size: 0.72rem; color: var(--faint);
+            flex-shrink: 0; text-align: right;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* ── Portfolio: project snippet cards ── */
+        .proj-grid { display: flex; flex-direction: column; gap: 1.125rem; }
+        .proj-card {
+            display: block; width: 100%; text-align: left;
+            position: relative;
+            font-family: inherit; cursor: pointer;
+            background: rgba(255, 255, 255, 0.35);
+            border: 1px solid var(--rule); border-radius: 3px;
+            padding: 1.125rem 1.25rem 1.1875rem;
+            transition: border-color 0.15s, box-shadow 0.18s, transform 0.18s, background 0.15s;
+        }
+        .proj-card:hover {
+            border-color: var(--faint);
+            background: rgba(255, 255, 255, 0.55);
+            box-shadow: 0 6px 22px rgba(45, 27, 14, 0.07);
+            transform: translateY(-2px);
+        }
+        .proj-cat {
+            font-size: 0.62rem; font-weight: 500;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--faint); margin-bottom: 0.4rem;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+        .proj-title {
+            font-family: 'Libre Caslon Display', serif;
+            font-size: 1.2rem; font-weight: 400; line-height: 1.2;
+            color: var(--ink); margin-bottom: 0.4rem; padding-right: 2rem;
+        }
+        .proj-hook {
+            font-size: 0.82rem; color: var(--muted);
+            line-height: 1.55; max-width: 500px; margin-bottom: 0;
+        }
+        .proj-open {
+            position: absolute; top: 1.25rem; right: 1.25rem;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: var(--faint);
+            transition: color 0.18s, transform 0.18s;
+        }
+        .proj-card:hover .proj-open { color: var(--accent); transform: translateX(3px); }
+
+        /* ── Portfolio: chart modal ── */
+        .chart-modal {
+            position: fixed; inset: 0; z-index: 1000;
+            display: flex; align-items: flex-start; justify-content: center;
+            padding: clamp(1rem, 5vh, 3.5rem) 1rem;
+            overflow-y: auto;
+        }
+        .chart-modal[hidden] { display: none; }
+        .chart-modal-backdrop {
+            position: fixed; inset: 0;
+            background: rgba(28, 18, 10, 0.5);
+            backdrop-filter: blur(2px);
+            animation: modal-fade 0.18s ease;
+        }
+        .chart-modal-panel {
+            position: relative; z-index: 1;
+            width: 100%; max-width: 768px;
+            background: var(--bg);
+            border: 1px solid var(--rule); border-radius: 4px;
+            box-shadow: 0 24px 64px rgba(28, 18, 10, 0.32);
+            animation: modal-rise 0.2s ease;
+        }
+        @keyframes modal-fade { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes modal-rise {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .chart-modal-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 1rem; padding: 0.85rem 1rem 0.85rem 1.25rem;
+            border-bottom: 1px solid var(--rule);
+        }
+        .chart-modal-cap {
+            font-size: 0.72rem; color: var(--muted);
+            font-family: 'IBM Plex Mono', monospace; line-height: 1.5;
+        }
+        .chart-modal-close {
+            flex-shrink: 0; background: none; border: 1px solid var(--rule);
+            border-radius: 3px; cursor: pointer;
+            width: 30px; height: 30px; font-size: 1.1rem; line-height: 1;
+            color: var(--muted); font-family: inherit;
+            transition: color 0.15s, border-color 0.15s, background 0.15s;
+        }
+        .chart-modal-close:hover { color: var(--ink); border-color: var(--faint); background: rgba(255,255,255,0.4); }
+        .chart-modal-body { padding: 0.5rem; }
+        .chart-frame {
+            width: 100%; border: none; border-radius: 2px; display: block;
+            background: #fff;
+        }
+
+        /* ── Footer ── */
+        footer {
+            max-width: 680px; margin: 0 auto;
+            padding: 1.25rem 1.75rem;
+            font-size: 0.72rem; color: var(--faint);
+            border-top: 1px solid var(--rule);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* ── Focus rings ── */
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+            border-radius: 2px;
+        }
+        .tab-btn:focus { outline: none; }
+        .tab-btn:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: -2px;
+        }
+
+        /* ── "Now" badge ── */
+        .now-badge {
+            font-size: 0.6rem; font-weight: 500;
+            font-family: 'IBM Plex Mono', monospace;
+            letter-spacing: 0.07em; text-transform: uppercase;
+            color: var(--accent);
+            background: rgba(139, 69, 19, 0.09);
+            padding: 0.1rem 0.4rem;
+            border-radius: 2px;
+            vertical-align: middle;
+        }
+
+        /* ── Skill group labels ── */
+        .skill-group {
+            font-size: 0.6rem; font-weight: 500;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--faint);
+            padding: 1.25rem 0 0.3rem;
+            border-bottom: 1px solid var(--rule);
+        }
+        .skill-group:first-child { padding-top: 0; }
+
+        /* ── Print ── */
+        @media print {
+            body::after { display: none; }
+            .tabs-bar { display: none; }
+            .tab-panel { display: block !important; opacity: 1 !important; animation: none !important; }
+            .tab-panel + .tab-panel { margin-top: 2rem; border-top: 1px solid #ccc; padding-top: 2rem; }
+            .exp-item::before { display: none; }
+            footer { border-top: 1px solid #ccc; }
+            body { font-size: 11pt; color: #000; background: #fff; }
+            a { color: #000; text-decoration: none; }
+        }
+
+        /* ── Mobile ── */
+        @media (max-width: 600px) {
+            main { padding: 2.25rem 1.125rem 4rem; }
+            footer { padding: 1.25rem 1.125rem; }
+
+            /* Scale name down for narrow viewports */
+            .intro-name { font-size: clamp(1.9rem, 9vw, 3.4rem); }
+
+            /* Scrollable tab bar, larger touch targets */
+            .tabs-bar {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .tabs-bar::-webkit-scrollbar { display: none; }
+            .tab-btn { height: 44px; padding: 0 0.875rem; }
+            .tab-btn:first-child { padding-left: 0; }
+
+            /* Stack role title above date */
+            .exp-row { flex-direction: column; gap: 0.1rem; align-items: flex-start; }
+
+            /* Realign left hover bar to reduced main padding */
+            .exp-item::before { left: -1.125rem; }
+
+            /* Allow org line to wrap on long city names */
+            .exp-org { flex-wrap: wrap; }
+
+            /* Remove fixed max-widths so text fills the column */
+            .exp-desc { max-width: 100%; }
+            .intro-bio { max-width: 100%; }
+
+            /* Skills: single column */
+            .skill-row { grid-template-columns: 1fr; gap: 0.2rem; }
+            .skill-cat { margin-bottom: 0.1rem; }
+
+            /* Credentials: stack label and year */
+            .cred-row { flex-direction: column; gap: 0.15rem; }
+            .cred-right { text-align: left; }
+        }
+    </style>
+</head>
+<body>
+
+<main>
+
+    <!-- INTRO -->
+    <section class="intro" aria-label="Introduction">
+        <h1 class="intro-name">Rajeev Kotha</h1>
+        <p class="intro-meta">Vancouver, BC</p>
+
+        <p class="intro-bio">
+            I model buildings and build tools that help decarbonise them. Currently at
+            OPEN Technologies, building a Python platform used by real estate organisations
+            and utilities to evaluate retrofit pathways at building-stock scale.
+        </p>
+        <p class="intro-bio secondary">
+            Research background at UVic&#8217;s Energy in Cities group in surrogate modelling and building
+            archetype clustering. Consulting on building electrification at E Source.
+            Buildings policy and community solar work in between.
+            M.Eng in Energy Systems from <a href="https://energysystemsmeng.grainger.illinois.edu/" target="_blank" rel="noopener noreferrer">UIUC</a>.
+        </p>
+
+        <div class="intro-links">
+            <span class="intro-link" style="cursor:default;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                </svg>
+                kotha [dot] rajeev [at] gmail [dot] com
+            </span>
+            <a href="https://linkedin.com/in/rajeevkotha" target="_blank" rel="noopener noreferrer" class="intro-link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+                LinkedIn
+            </a>
+            <a href="https://github.com/Darthrajha" target="_blank" rel="noopener noreferrer" class="intro-link">
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+                GitHub
+            </a>
+            <a href="https://orcid.org/0000-0002-7317-3688" target="_blank" rel="noopener noreferrer" class="intro-link">
+                <svg width="15" height="15" viewBox="0 0 256 256" fill="currentColor">
+                    <path d="M128 0C57.3 0 0 57.3 0 128s57.3 128 128 128 128-57.3 128-128S198.7 0 128 0zm-22.5 74.2c0-5.7 4.6-10.3 10.3-10.3s10.3 4.6 10.3 10.3-4.6 10.3-10.3 10.3-10.3-4.6-10.3-10.3zm-7.8 26.5h36.1v81.6H97.7V100.7zm54.4 0h34.5v11.1h.5c4.8-9.1 16.5-18.7 34-18.7 36.3 0 43 23.9 43 54.9v63.2h-36V155c0-13.5-.3-30.8-18.8-30.8-18.8 0-21.7 14.7-21.7 29.9v47.9h-35.5V100.7z"/>
+                </svg>
+                ORCID
+            </a>
+        </div>
+    </section>
+
+    <!-- TABS -->
+    <div class="tabs-bar" role="tablist" aria-label="Profile sections">
+        <button class="tab-btn active" role="tab" aria-selected="true"  aria-controls="tab-exp"     data-tab="tab-exp">Experience</button>
+        <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-writing"  data-tab="tab-writing">Writing</button>
+        <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-skills"   data-tab="tab-skills">Skills</button>
+        <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-edu"      data-tab="tab-edu">Education</button>
+        <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-portfolio" data-tab="tab-portfolio">Portfolio</button>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <div class="tab-panel active" id="tab-exp" role="tabpanel">
+        <div class="exp-list">
+
+            <article class="exp-item">
+                <div class="exp-row">
+                    <span class="exp-role">Data Scientist &amp; Building Energy Specialist</span>
+                    <span class="exp-period">2025 &#8211; <span class="now-badge">now</span></span>
+                </div>
+                <p class="exp-org">
+                    <a href="https://opentech.eco/" target="_blank" rel="noopener noreferrer">OPEN Technologies</a> &middot; Vancouver, BC, Canada
+                </p>
+                <p class="exp-desc">Contributing to OPEN&#8217;s Virtual Decarbonisation Platform, a Python production tool used by utility partners and real estate management organisations to evaluate building-stock energy efficiency and decarbonisation pathways. The work involves integrating building survey data, utility billing time-series, and weather measurements to characterise building-stock performance across envelope, HVAC, lighting, and controls, and translating findings into actionable recommendations for partner-facing audiences.</p>
+            </article>
+
+            <article class="exp-item">
+                <div class="exp-row">
+                    <span class="exp-role">Multiple Roles</span>
+                    <span class="exp-period">2023 &#8211; 2025</span>
+                </div>
+                <p class="exp-org">Multiple Companies &middot; Vancouver, BC, Canada</p>
+                <p class="exp-desc">Community solar analysis and buildings policy work across multiple organisations in the energy sector. Included solar PV asset performance modelling using PVsyst and SAM, with measured-versus-modelled validation.</p>
+            </article>
+
+            <article class="exp-item">
+                <div class="exp-row">
+                    <span class="exp-role">Lead Analyst</span>
+                    <span class="exp-period">2022 &#8211; 2023</span>
+                </div>
+                <p class="exp-org">
+                    <a href="https://www.esource.com/" target="_blank" rel="noopener noreferrer">E Source</a> &middot; Edmonton, AB, Canada
+                </p>
+                <p class="exp-desc">Served as in-house expert on building electrification technologies and related utility programmes, responding to research and advisory requests from member utilities across the US and Canada. Gathered and critically analysed information from primary and secondary sources, translating findings into reports, technical briefs, webinars, and customised presentations for audiences of varying technical backgrounds. Represented E Source as a subject-matter expert at industry events, mentored junior staff, and supported the emerging technology consulting team on an as-needed basis.</p>
+            </article>
+
+            <article class="exp-item">
+                <div class="exp-row">
+                    <span class="exp-role">Graduate Research Assistant</span>
+                    <span class="exp-period">2021 &#8211; 2022</span>
+                </div>
+                <p class="exp-org">
+                    <a href="https://www.uvic.ca/" target="_blank" rel="noopener noreferrer">University of Victoria</a> &middot; Victoria, BC, Canada
+                </p>
+                <p class="exp-desc">Applied building physics research at the <a href="https://energyincities.gitlab.io/website/" target="_blank" rel="noopener noreferrer">Energy in Cities</a> group on building energy performance, with parametric analysis across central plant, HVAC, and envelope retrofit scenarios using EnergyPlus and the <a href="https://besos.uvic.ca/" target="_blank" rel="noopener noreferrer">BESOS</a> analytics platform. Research focused on neural network surrogate modelling and data-driven building archetype clustering. Also designed tooling that abstracted simulation complexity so non-specialist researchers could query and visualise processed datasets independently. Third place in the Technical Demonstration category at the <a href="https://be-exchange.org/nyserda-rtem-hackathon-demo-day/" target="_blank" rel="noopener noreferrer">NYSERDA RTEM Hackathon</a>. Part of UVic&#8217;s <a href="https://www.uvic.ca/news/archive/topics/2022+rebuild-energy-efficiency-buildings+news" target="_blank" rel="noopener noreferrer">Clean Energy ReBuild</a>, a 16-organisation net-zero partnership.</p>
+            </article>
+
+            <article class="exp-item">
+                <div class="exp-row">
+                    <span class="exp-role">Business Operations Analyst</span>
+                    <span class="exp-period">2020 &#8211; 2021</span>
+                </div>
+                <p class="exp-org">
+                    <a href="https://ampion.net/" target="_blank" rel="noopener noreferrer">Ampion, Inc.</a> &middot; Boston, MA, USA
+                </p>
+                <p class="exp-desc">Business operations and analytical work in the community solar space.</p>
+            </article>
+
+            <article class="exp-item">
+                <div class="exp-row">
+                    <span class="exp-role">Program Associate</span>
+                    <span class="exp-period">2019 &#8211; 2020</span>
+                </div>
+                <p class="exp-org">
+                    <a href="https://www.cee1.org/" target="_blank" rel="noopener noreferrer">Consortium for Energy Efficiency</a> &middot; Middleton, MA, USA
+                </p>
+                <p class="exp-desc">Owned the <a href="https://cee1.org/images/pdf/2019_AIR_Report_1.pdf" target="_blank" rel="noopener noreferrer">2019 State of the Efficiency Program Industry</a> on the Evaluation Research and Behaviour team, the flagship multi-utility programme performance and savings-verification deliverable across North American member utilities. Synthesised performance data across the efficiency industry, analysing how utility programmes are designed, measured, and verified.</p>
+            </article>
+
+            <article class="exp-item">
+                <div class="exp-row">
+                    <span class="exp-role">Research Fellow</span>
+                    <span class="exp-period">2019 &#8211; 2020</span>
+                </div>
+                <p class="exp-org">
+                    <a href="https://primecoalition.org/" target="_blank" rel="noopener noreferrer">Prime Coalition</a> &middot; Cambridge, MA, USA
+                </p>
+                <p class="exp-desc">Built technical solution models of low-GHG technologies for the <a href="https://www.cranetool.org/" target="_blank" rel="noopener noreferrer">CRANE tool</a>, a carbon reduction assessment framework used to estimate greenhouse gas emission reductions from early-stage climate technology investments.</p>
+            </article>
+
+            <article class="exp-item">
+                <div class="exp-row">
+                    <span class="exp-role">Energy Efficiency Assistant</span>
+                    <span class="exp-period">2018 &#8211; 2019</span>
+                </div>
+                <p class="exp-org">
+                    <a href="https://www.ccrpc.org/" target="_blank" rel="noopener noreferrer">Champaign County Regional Planning Commission</a> &middot; Urbana, IL, USA
+                </p>
+                <p class="exp-desc">Hands-on residential building assessment and weatherisation through the federally funded Weatherization Assistance Program, supported in part through the <a href="https://amerenillinoissavings.com/mdi/workforce-development/summer-internship-program/" target="_blank" rel="noopener noreferrer">Ameren Illinois Summer Internship Program</a>. Direct engagement with how buildings perform and fail: assessing envelope air-sealing and insulation, HVAC condition, lighting, and controls, then implementing conservation measures.</p>
+            </article>
+
+            <article class="exp-item">
+                <div class="exp-row">
+                    <span class="exp-role">Analyst</span>
+                    <span class="exp-period">2015 &#8211; 2017</span>
+                </div>
+                <p class="exp-org">
+                    <a href="https://escalent.co/" target="_blank" rel="noopener noreferrer">Grail Insights (now Escalent)</a> &middot; Noida, UP, India
+                </p>
+                <p class="exp-desc">Research analytics consulting. Built foundational skills in data-driven decision-making and client deliverable production.</p>
+            </article>
+
+        </div>
+    </div>
+
+    <!-- WRITING -->
+    <div class="tab-panel" id="tab-writing" role="tabpanel">
+
+        <p class="s-label">Peer-reviewed</p>
+        <ul class="pub-list">
+            <li class="pub-item">
+                <span class="pub-n">1</span>
+                <div>
+                    <a href="https://www.researchgate.net/publication/364323230_A_clustering_framework_to_identify_non-residential_building_archetypes_using_subsystem-level_targeting"
+                       target="_blank" rel="noopener noreferrer" class="pub-title">
+                        A clustering framework to identify non-residential building archetypes using subsystem-level targeting
+                    </a>
+                    <p class="pub-meta">12th eSim Building Simulation Conference (IBPSA-Canada) &middot; Ottawa, Canada &middot; June 2022</p>
+                    <p class="pub-meta">Energy in Cities, University of Victoria</p>
+                </div>
+            </li>
+            <li class="pub-item">
+                <span class="pub-n">2</span>
+                <div>
+                    <a href="https://www.researchgate.net/publication/373676751_Time-Resolved_Neural_Network_Surrogate_Models_as_Digital_Twins"
+                       target="_blank" rel="noopener noreferrer" class="pub-title">
+                        Time-resolved neural network surrogate models as digital twins
+                    </a>
+                    <p class="pub-meta">5th International Conference on Building Energy and Environment (COBEE 2022) &middot; Montreal, Canada &middot; July 2022</p>
+                    <p class="pub-meta">Energy in Cities, University of Victoria</p>
+                </div>
+            </li>
+        </ul>
+
+        <p class="s-label" style="margin-top: 2rem;">Projects</p>
+        <ul class="pub-list">
+            <li class="pub-item">
+                <span class="pub-n">1</span>
+                <div>
+                    <a href="https://ceme.ece.illinois.edu/projects/solar-decathlon-illinois-china-competition/"
+                       target="_blank" rel="noopener noreferrer" class="pub-title">
+                        Solar Decathlon China 2018 - Waterside Cube
+                    </a>
+                    <p class="pub-meta">SJTU&#8211;UIUC Joint Team &middot; Dezhou, China &middot; 2018</p>
+                    <p class="pub-meta" style="margin-top: 0.3rem; color: var(--muted); font-size: 0.825rem; line-height: 1.6;">
+                        Part of the University of Illinois team that partnered with Shanghai Jiao Tong University for the U.S. DOE and China NEA-sponsored competition. The joint entry drew on traditional Chinese courtyard dwelling typologies and integrated passive design strategies, prefabricated modular construction, PV panels, and an evaporative HVAC system.
+                    </p>
+                </div>
+            </li>
+        </ul>
+
+        <p class="s-label" style="margin-top: 2rem;">Reports</p>
+        <ul class="pub-list">
+            <li class="pub-item">
+                <span class="pub-n">1</span>
+                <div>
+                    <a href="https://cee1.org/images/pdf/2019_AIR_Report_1.pdf"
+                       target="_blank" rel="noopener noreferrer" class="pub-title">
+                        2019 State of the Efficiency Program Industry
+                    </a>
+                    <p class="pub-meta">Consortium for Energy Efficiency &middot; 2019</p>
+                </div>
+            </li>
+            <li class="pub-item">
+                <span class="pub-n">2</span>
+                <div>
+                    <a href="https://www.pembina.org/pub/reframed-initiative-outcomes-analysis"
+                       target="_blank" rel="noopener noreferrer" class="pub-title">
+                        Reframed Initiative Outcomes Analysis
+                    </a>
+                    <p class="pub-meta">Pembina Institute &middot; buildings policy and energy systems</p>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+
+    <!-- SKILLS -->
+    <div class="tab-panel" id="tab-skills" role="tabpanel">
+        <div class="skill-table">
+
+            <p class="skill-group">Engineering</p>
+            <div class="skill-row">
+                <span class="skill-cat">Building physics</span>
+                <span class="skill-vals">Heat transfer, building envelopes, HVAC systems, AHUs, FCUs, chillers, boilers, ASHRAE 90.1 / 55 / 62.1</span>
+            </div>
+            <div class="skill-row">
+                <span class="skill-cat">Simulation</span>
+                <span class="skill-vals">EnergyPlus, BESOS, building energy modelling, parametric analysis, surrogate modelling, archetype clustering</span>
+            </div>
+
+            <p class="skill-group">Software</p>
+            <div class="skill-row">
+                <span class="skill-cat">Programming</span>
+                <span class="skill-vals">Python, SQL, machine learning, neural networks, time-series analysis, dashboard development</span>
+            </div>
+
+            <p class="skill-group">Domain</p>
+            <div class="skill-row">
+                <span class="skill-cat">Renewables and M&amp;V</span>
+                <span class="skill-vals">PVsyst, SAM, solar PV modelling, measurement and verification, demand-side management, energy auditing</span>
+            </div>
+
+            <p class="skill-group">Professional</p>
+            <div class="skill-row">
+                <span class="skill-cat">Communication</span>
+                <span class="skill-vals">Client consulting, technical presentations, stakeholder briefings, white papers, business development</span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="tab-panel" id="tab-edu" role="tabpanel">
+
+        <p class="s-label">Education</p>
+        <div class="cred-table">
+            <div class="cred-row">
+                <span class="cred-name">Master of Engineering in Energy Systems &middot; University of Illinois at Urbana-Champaign</span>
+                <span class="cred-right">2018</span>
+            </div>
+            <div class="cred-row">
+                <span class="cred-name">Bachelor of Technology in Mechanical Engineering &middot; Delhi Technological University</span>
+                <span class="cred-right">2015</span>
+            </div>
+        </div>
+
+        <p class="s-label">Certifications</p>
+        <div class="cred-table">
+            <div class="cred-row">
+                <span class="cred-name">Certified Passive House Tradesperson (Building Envelope)</span>
+                <span class="cred-right">iPHA</span>
+            </div>
+            <div class="cred-row">
+                <span class="cred-name">LEED Green Associate</span>
+                <span class="cred-right">GBCI</span>
+            </div>
+            <div class="cred-row">
+                <span class="cred-name">NABCEP PV Associate</span>
+                <span class="cred-right">NABCEP</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PORTFOLIO -->
+    <div class="tab-panel" id="tab-portfolio" role="tabpanel">
+
+        <p class="s-label">Selected work</p>
+
+        <div class="proj-grid">
+
+            <button class="proj-card"
+                    data-chart-src="./charts/canada-affordable-available-rental.html"
+                    data-chart-cap="Affordable &amp; available rental homes per 100 lowest-income renter households, by province &amp; territory · 2021 Census of Population"
+                    aria-haspopup="dialog">
+                <p class="proj-cat">Data visualization · Housing</p>
+                <h3 class="proj-title">The Canadian affordability gap</h3>
+                <p class="proj-hook">
+                    For the lowest-income renters, an affordable home is scarce almost everywhere -
+                    but <em>how</em> scarce swings sharply across the country. A Canadian recreation of the
+                    NLIHC&#8217;s &ldquo;Gap&rdquo; measure, built from the 2021 Census.
+                </p>
+                <span class="proj-open" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </span>
+            </button>
+
+        </div>
+
+    </div>
+
+</main>
+
+<!-- CHART MODAL -->
+<div class="chart-modal" id="chart-modal" hidden>
+    <div class="chart-modal-backdrop" data-close></div>
+    <div class="chart-modal-panel" role="dialog" aria-modal="true" aria-label="Chart detail">
+        <div class="chart-modal-bar">
+            <p class="chart-modal-cap" id="chart-modal-cap"></p>
+            <button class="chart-modal-close" data-close aria-label="Close chart">&times;</button>
+        </div>
+        <div class="chart-modal-body" id="chart-modal-body"></div>
+    </div>
+</div>
+
+<footer>
+    Rajeev Kotha &middot; 2026
+</footer>
+
+<script>
+    /* ── Tab switching ── */
+    const tabBtns   = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    function activateTab(btn) {
+        tabBtns.forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+        });
+        tabPanels.forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+    }
+
+    tabBtns.forEach(btn => btn.addEventListener('click', () => activateTab(btn)));
+
+    /* Keyboard navigation */
+    document.querySelector('.tabs-bar').addEventListener('keydown', e => {
+        const all = [...tabBtns];
+        const idx = all.indexOf(document.querySelector('.tab-btn.active'));
+        if (e.key === 'ArrowRight') { e.preventDefault(); activateTab(all[(idx + 1) % all.length]); }
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); activateTab(all[(idx - 1 + all.length) % all.length]); }
+    });
+
+    /* ── Chart modal: open snippet → full interactive chart ── */
+    const modal     = document.getElementById('chart-modal');
+    const modalBody = document.getElementById('chart-modal-body');
+    const modalCap  = document.getElementById('chart-modal-cap');
+    let lastFocused = null;
+
+    function openChart(card) {
+        lastFocused = card;
+        modalCap.innerHTML = card.dataset.chartCap || '';
+        // Build the iframe fresh each open so it loads while visible (and reports its true height)
+        modalBody.innerHTML = '';
+        const f = document.createElement('iframe');
+        f.className = 'chart-frame';
+        f.setAttribute('scrolling', 'no');
+        f.setAttribute('title', 'Interactive chart');
+        f.style.height = '1500px';
+        f.src = card.dataset.chartSrc;
+        f.addEventListener('load', () => {
+            try {
+                const h = f.contentDocument && f.contentDocument.body.scrollHeight;
+                if (h) f.style.height = (h + 20) + 'px';
+            } catch (err) { /* fall back to postMessage */ }
+        });
+        modalBody.appendChild(f);
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        modal.querySelector('.chart-modal-close').focus();
+    }
+
+    function closeChart() {
+        modal.hidden = true;
+        modalBody.innerHTML = '';
+        document.body.style.overflow = '';
+        if (lastFocused) lastFocused.focus();
+    }
+
+    document.querySelectorAll('.proj-card').forEach(card =>
+        card.addEventListener('click', () => openChart(card)));
+    modal.querySelectorAll('[data-close]').forEach(el =>
+        el.addEventListener('click', closeChart));
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && !modal.hidden) closeChart();
+    });
+
+    /* ── Auto-size chart iframes via postMessage (fallback for the modal frame) ── */
+    window.addEventListener('message', e => {
+        if (e.data && e.data.type === 'chart-height' && e.data.height > 0) {
+            document.querySelectorAll('.chart-frame').forEach(f => {
+                try {
+                    if (f.contentWindow === e.source) {
+                        f.style.height = (e.data.height + 20) + 'px';
+                    }
+                } catch(err) {}
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
