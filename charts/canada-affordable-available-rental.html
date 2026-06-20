@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-CA">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,7 +15,7 @@
   #map svg{width:100%;height:auto;display:block}
   .prov{stroke:#fff;stroke-width:.7;cursor:default;transition:opacity .1s}
   .prov:hover{opacity:.82}
-  .lab{font:700 13px Arial;pointer-events:none;text-anchor:middle}
+  .lab{font:700 13px Arial;pointer-events:none;text-anchor:middle;paint-order:stroke fill}
   .legend{display:flex;align-items:center;gap:8px;justify-content:center;margin:6px 0 2px;font-size:11.5px;color:#33424f}
   .legend .sw{width:34px;height:14px;display:inline-block}
   .axis{text-align:center;font-size:12.5px;color:var(--muted);margin:8px 0 14px;font-weight:600}
@@ -74,6 +74,8 @@
       <dd>Of every 100 lowest-income renter households, how many are housed affordably. Lower = deeper shortage.</dd>
     </dl>
   </div>
+
+  <p style="margin:14px 0 2px;font-size:11px;color:#8a9aa6;font-family:-apple-system,sans-serif;">Published June 2026</p>
 
   <div class="credits">
     <div class="credit"><span class="tag alt">Inspiration</span>
@@ -134,8 +136,12 @@
       .on('mouseleave',hide);
     svg.selectAll('text.lab').data(fc.features.filter(function(f){return V[f.properties.name]!=null;}))
       .join('text').attr('class','lab').attr('fill',function(d){return V[d.properties.name]<=28?'#fff':'#5a3000';})
+      .attr('stroke',function(d){return V[d.properties.name]<=28?'rgba(60,0,0,0.45)':'rgba(255,255,255,0.85)';})
+      .attr('stroke-width',2.5)
       .attr('transform',function(d){var c=path.centroid(d),n=d.properties.name;
-        if(n==="Nova Scotia")c=[c[0]+16,c[1]+12]; if(n==="Prince Edward Island")c=[c[0]+14,c[1]-8];
+        if(n==="Nova Scotia")              c=[c[0]+26,c[1]+22];
+        if(n==="Prince Edward Island")     c=[c[0]+14,c[1]-8];
+        if(n==="Newfoundland and Labrador")c=[c[0]+18,c[1]-12];
         return 'translate('+c+')';})
       .text(function(d){return Math.round(V[d.properties.name]);});
   }).catch(function(){document.getElementById('map').innerHTML='<p style="color:#a33;font-size:13px">Map needs internet; the bar chart and data.csv still work.</p>';})
