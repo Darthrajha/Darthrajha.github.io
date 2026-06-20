@@ -800,7 +800,10 @@
     <div class="chart-modal-panel" role="dialog" aria-modal="true" aria-label="Chart detail">
         <div class="chart-modal-bar">
             <p class="chart-modal-cap" id="chart-modal-cap"></p>
-            <button class="chart-modal-close" data-close aria-label="Close chart">&times;</button>
+            <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0;">
+                <span id="chart-nav-hint" aria-hidden="true" style="font-size:0.65rem;font-family:'IBM Plex Mono',monospace;color:var(--faint);letter-spacing:0.05em;"></span>
+                <button class="chart-modal-close" data-close aria-label="Close chart">&times;</button>
+            </div>
         </div>
         <div class="chart-modal-body" id="chart-modal-body"></div>
     </div>
@@ -840,11 +843,25 @@
     const modal     = document.getElementById('chart-modal');
     const modalBody = document.getElementById('chart-modal-body');
     const modalCap  = document.getElementById('chart-modal-cap');
+    const navHint   = document.getElementById('chart-nav-hint');
+    const cards     = [...document.querySelectorAll('.proj-card')];
     let lastFocused = null;
+    let currentIdx  = -1;
 
-    function openChart(card) {
+    function openChart(idx) {
+        const card = cards[idx];
+        if (!card) return;
+        currentIdx  = idx;
         lastFocused = card;
         modalCap.innerHTML = card.dataset.chartCap || '';
+
+        // Position hint: show arrows only where navigation is possible
+        if (cards.length > 1) {
+            const prev = idx > 0              ? '←' : '  ';
+            const next = idx < cards.length-1 ? '→' : '  ';
+            navHint.textContent = `${prev}  ${idx + 1} / ${cards.length}  ${next}`;
+        }
+
         // Build the iframe fresh each open so it loads while visible (and reports its true height)
         modalBody.innerHTML = '';
         const f = document.createElement('iframe');
@@ -870,14 +887,17 @@
         modalBody.innerHTML = '';
         document.body.style.overflow = '';
         if (lastFocused) lastFocused.focus();
+        currentIdx = -1;
     }
 
-    document.querySelectorAll('.proj-card').forEach(card =>
-        card.addEventListener('click', () => openChart(card)));
+    cards.forEach((card, i) => card.addEventListener('click', () => openChart(i)));
     modal.querySelectorAll('[data-close]').forEach(el =>
         el.addEventListener('click', closeChart));
     document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && !modal.hidden) closeChart();
+        if (modal.hidden) return;
+        if (e.key === 'Escape')     { closeChart(); return; }
+        if (e.key === 'ArrowRight') { e.preventDefault(); openChart((currentIdx + 1) % cards.length); }
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); openChart((currentIdx - 1 + cards.length) % cards.length); }
     });
 
     /* ── Auto-size chart iframes via postMessage (fallback for the modal frame) ── */
