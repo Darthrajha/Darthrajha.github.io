@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BEIT: Building Energy Intensity Toolchain</title>
+<style>
+  :root{ --ink:#143b5e; --muted:#5b6b78; }
+  *{box-sizing:border-box}
+  body{margin:0;padding:0;background:#fff}
+  .cc{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:#1b2733;max-width:720px;margin:0 auto;padding:20px 18px 22px;background:#fff;border:1px solid #f0e9d2}
+  .cc h1{color:var(--ink);font-size:19px;line-height:1.25;margin:0 0 3px;font-weight:800}
+  .cc .sub{color:var(--muted);font-size:12.5px;margin:0 0 14px}
+
+  /* Video embed — responsive 16:9 */
+  .video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;margin:0 0 14px;border-radius:6px;background:#0d1a26}
+  .video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:6px}
+
+  /* Award strip */
+  .award{background:#f5f0e8;border:1px solid #d9cdb8;border-radius:6px;
+    padding:7px 12px;font-size:12px;color:#3a2a00;margin-bottom:14px;line-height:1.45}
+  .award b{color:#1a0f00}
+
+  /* Body copy */
+  .desc p{font-size:13px;line-height:1.7;color:#2a3740;margin:0 0 10px}
+  .desc p:last-child{margin-bottom:0}
+
+  /* Module list */
+  .modules{margin:14px 0;background:#f7fafb;border:1px solid #e7eef2;border-radius:8px;padding:12px 14px}
+  .modules h2{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--ink);margin:0 0 10px;font-weight:800}
+  .module{display:grid;grid-template-columns:3px 1fr;gap:0 10px;margin:0 0 9px;align-items:start}
+  .module:last-child{margin-bottom:0}
+  .module .bar{background:var(--ink);border-radius:2px;height:100%;min-height:42px}
+  .module .body{}
+  .module .mod-title{font-size:12px;font-weight:800;color:#26333f;margin:0 0 2px}
+  .module .mod-desc{font-size:11.5px;color:#56656f;line-height:1.5;margin:0}
+
+  /* Credits */
+  .credits{margin-top:14px;border-top:1px solid #eef0f2;padding-top:12px;display:grid;gap:9px}
+  .credit{display:grid;grid-template-columns:96px 1fr;gap:10px;align-items:start}
+  .credit .tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;
+    color:#fff;background:var(--ink);border-radius:4px;padding:3px 0;text-align:center}
+  .credit .tag.neu{background:#6b7884}
+  .credit .txt{font-size:11.5px;color:#5b6b78;line-height:1.5}
+  .credit .txt b{color:#3a4954}
+  .credit .txt a{color:#3a4954}
+</style>
+</head>
+<body>
+<div class="cc">
+
+  <h1>BEIT: Building Energy Intensity Toolchain</h1>
+  <p class="sub">NYSERDA Global Energy &amp; Building Hackathon &middot; Technical Demonstration &middot; July 2022</p>
+
+  <div class="video-wrap">
+    <iframe src="https://www.youtube-nocookie.com/embed/vAMDc-Beryk"
+            title="BEIT: Building Energy Intensity Toolchain — NYSERDA RTEM Hackathon presentation"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+  </div>
+
+  <div class="award">
+    <b>Third place, Technical Demonstration category &middot; $5,000 award</b><br>
+    NYSERDA Global Energy &amp; Building Hackathon, hosted by Onboard Data and Building Energy Exchange &middot; New York, 2022
+  </div>
+
+  <div class="desc">
+    <p>Building automation systems produce far more data than most teams can act on. The gap between raw sensor streams and meaningful conclusions creates a real problem for decision-makers trying to prioritise energy conservation, maintenance, or capital investment.</p>
+    <p>BEIT closes that gap. The toolchain ingests unfiltered data from NYSERDA&#8217;s Real Time Energy Management (RTEM) database and condenses it into actionable output through a dashboard. Its modular design means individual components can be upgraded independently as methods improve.</p>
+  </div>
+
+  <div class="modules">
+    <h2>Toolchain modules</h2>
+    <div class="module">
+      <span class="bar"></span>
+      <div class="body">
+        <p class="mod-title">Archetype benchmarking</p>
+        <p class="mod-desc">Compares measured building performance against an EnergyPlus simulation of the same building type, enabling a side-by-side view of where a building falls short of its reference.</p>
+      </div>
+    </div>
+    <div class="module">
+      <span class="bar"></span>
+      <div class="body">
+        <p class="mod-title">Weather normalisation</p>
+        <p class="mod-desc">Relates monthly heating and cooling degree days to energy consumption, separating climate-driven demand from operational inefficiency.</p>
+      </div>
+    </div>
+    <div class="module">
+      <span class="bar"></span>
+      <div class="body">
+        <p class="mod-title">Electrification impact estimation</p>
+        <p class="mod-desc">Estimates the expected carbon reduction and predicted electrical load if fossil fuel systems are replaced, giving decision-makers a first-pass electrification case built from the building&#8217;s own data.</p>
+      </div>
+    </div>
+    <div class="module">
+      <span class="bar"></span>
+      <div class="body">
+        <p class="mod-title">HVAC fault detection</p>
+        <p class="mod-desc">Analyses zone temperatures, fan status, and supply&#8211;return air differentials to flag underperforming systems before they affect occupant comfort or escalate into capital failures.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="credits">
+    <div class="credit">
+      <span class="tag">Teams</span>
+      <span class="txt">
+        <b>Energy in Cities Group</b>, University of Victoria, BC &middot;
+        <b>Intelligent Environments Lab</b>, University of Texas at Austin
+      </span>
+    </div>
+    <div class="credit">
+      <span class="tag neu">Context</span>
+      <span class="txt">
+        Participants analysed time-series data from 200&#43; commercial and multifamily buildings across New York State, drawn from NYSERDA&#8217;s RTEM database: building automation systems, utility meters, equipment submeters, and IoT sensors.
+        <a href="https://be-exchange.org/nyserda-rtem-hackathon-demo-day/" rel="noopener noreferrer">Demo Day recap at Building Energy Exchange.</a>
+      </span>
+    </div>
+  </div>
+
+</div>
+<script>
+  setTimeout(function(){
+    window.parent.postMessage({ type: 'chart-height', height: document.body.scrollHeight }, '*');
+  }, 100);
+</script>
+</body>
+</html>
