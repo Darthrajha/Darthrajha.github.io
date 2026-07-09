@@ -54,7 +54,7 @@
 <body>
 <div class="cc">
   <h1>Households without air conditioning</h1>
-  <p class="sub">By province. Darker = fewer households with AC. 2021 Households and the Environment Survey, Statistics Canada. * = estimated.</p>
+  <p class="sub">By province. Darker = fewer households with AC. 2021 Households and the Environment Survey, Statistics Canada.</p>
 
   <div id="map" role="img" aria-label="Choropleth map of Canada showing the percentage of households without air conditioning by province, 2021."></div>
   <div class="legend" id="legend"></div>
@@ -70,8 +70,8 @@
     <dl>
       <dt>Source data</dt>
       <dd>Statistics Canada, Households and the Environment Survey (HES), 2021, Table 38-10-0019-01. The HES reports the share of households with <b>at least one</b> type of air conditioner (central air, stand-alone unit, or heat pump). Values here are the complement: 100% minus that confirmed rate.</dd>
-      <dt>Estimated values (*)</dt>
-      <dd>The 2021 HES release individually named only six provinces (MB, ON, SK, QC, NB, NL), confirming the remaining four (AB, BC, NS, PEI) were all below 50% with AC. Estimates for those four draw on the 2017 linked-survey analysis (<i>Health Reports</i>, Quick &amp; Tjepkema, July 2023), the 2021 HES heat-pump penetration data (NB 34%, PEI 31%, NS 28%), and the 2025 CSS regional trend. They carry real uncertainty; treat them as order-of-magnitude indicators only.</dd>
+      <dt>Data update</dt>
+      <dd>The original 2021 HES release individually named only six provinces; the remaining four (AB, BC, NS, PEI) were initially estimated here. Statistics Canada&rsquo;s September 2025 table update published 2021 figures for all ten provinces, and all values shown are now as published. The same update added a 2023 reference period showing a sharp jump in AC adoption (e.g., PEI 83%, NS 71%, BC 56% with AC).</dd>
       <dt>Territories</dt>
       <dd>The HES does not cover Yukon, the Northwest Territories, or Nunavut. These appear in grey on the map.</dd>
     </dl>
@@ -83,7 +83,7 @@
     <div class="credit"><span class="tag">Data source</span>
       <span class="txt"><b>Statistics Canada</b>, Households and the Environment Survey (HES) 2021, Table 38-10-0019-01. Retrieved June 2026. Context: Quick M &amp; Tjepkema M, &ldquo;The prevalence of household air conditioning in Canada,&rdquo; <i>Health Reports</i>, Vol. 34, No. 7, July 2023, Cat. no. 82-003-X.</span></div>
     <div class="credit"><span class="tag neu">Method</span>
-      <span class="txt">Six provinces have confirmed 2021 HES rates (MB 90%, ON 84%, SK 75%, QC 63%, NB 56%, NL 19%). AB, BC, NS, and PEI are estimated (all confirmed &lt; 50% with AC by Statistics Canada). Territories excluded: not covered by HES. This chart shows <em>households without AC</em> to match the framing of the U.S. reference map; the underlying source reports <em>households with AC</em>.</span></div>
+      <span class="txt">All ten provinces have published 2021 HES rates (MB 90%, ON 84%, SK 75%, QC 63%, NB 56%, PEI 46%, NS 43%, AB 37%, BC 36%, NL 19% with AC). Territories excluded: not covered by HES. This chart shows <em>households without AC</em> to match the framing of the U.S. reference map; the underlying source reports <em>households with AC</em>. Pipeline: <a href="https://github.com/Darthrajha/canada-energy-charts" rel="noopener noreferrer">github.com/Darthrajha/canada-energy-charts</a>.</span></div>
   </div>
 </div>
 <div id="tt"></div>
@@ -96,15 +96,15 @@
   // est = true if value is estimated (not directly published by Statistics Canada for 2021)
   var RAW = {
     "Newfoundland and Labrador": { withAC: 19, est: false },
-    "Prince Edward Island":      { withAC: 44, est: true  },
-    "Nova Scotia":               { withAC: 40, est: true  },
+    "Prince Edward Island":      { withAC: 46, est: false },
+    "Nova Scotia":               { withAC: 43, est: false },
     "New Brunswick":             { withAC: 56, est: false },
     "Quebec":                    { withAC: 63, est: false },
     "Ontario":                   { withAC: 84, est: false },
     "Manitoba":                  { withAC: 90, est: false },
     "Saskatchewan":              { withAC: 75, est: false },
-    "Alberta":                   { withAC: 46, est: true  },
-    "British Columbia":          { withAC: 34, est: true  }
+    "Alberta":                   { withAC: 37, est: false },
+    "British Columbia":          { withAC: 36, est: false }
   };
   // Alias for the TopoJSON name
   RAW["Québec"] = RAW["Quebec"];
