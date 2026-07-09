@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>When utilities control the equipment &mdash; Rajeev Kotha</title>
+    <meta name="description" content="Grid-interactive efficient buildings in practice: utility pilots that directly control equipment inside buildings, what held them back, and where the field landed by 2026.">
+    <link rel="canonical" href="https://darthrajha.github.io/posts/grid-interactive-efficient-buildings.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="article">
+    <meta property="og:title"       content="When utilities control the equipment: grid-interactive efficient buildings in practice">
+    <meta property="og:description" content="Utility pilots that reach inside buildings — thermostats, water heaters, whole-building controls — what held them back in 2022, and where the field landed by 2026.">
+    <meta property="og:url"         content="https://darthrajha.github.io/posts/grid-interactive-efficient-buildings.html">
+    <meta property="og:image"       content="https://darthrajha.github.io/og-image.png">
+
+    <!-- Favicon: RK monogram -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23F5EDD8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Georgia%2C serif' font-size='14' font-weight='600' fill='%232D1B0E'%3ERK%3C/text%3E%3C/svg%3E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:     #F5EDD8;
+            --ink:    #2D1B0E;
+            --muted:  #7A6255;
+            --faint:  #AE9882;
+            --accent: #8B4513;
+            --rule:   #D9CDB8;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 15px; line-height: 1.6;
+            background: var(--bg); color: var(--ink);
+            -webkit-font-smoothing: antialiased;
+        }
+        body::after {
+            content: ''; position: fixed; inset: 0;
+            pointer-events: none; z-index: 9999; opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        main { max-width: 680px; margin: 0 auto; padding: 3rem 1.75rem 4.5rem; }
+
+        .back {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem; color: var(--accent);
+            text-decoration: none; border-bottom: 1px solid transparent;
+            transition: border-color 0.15s;
+        }
+        .back:hover { border-color: var(--accent); }
+
+        .kicker {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+            color: var(--faint); margin: 2.5rem 0 0.75rem;
+        }
+        h1 {
+            font-family: 'Libre Caslon Display', serif;
+            font-size: clamp(1.7rem, 4.5vw, 2.3rem);
+            font-weight: 400; line-height: 1.2; margin-bottom: 0.75rem;
+        }
+        .meta {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.72rem; color: var(--faint); margin-bottom: 2rem;
+        }
+        .provenance {
+            border: 1px solid var(--rule); border-radius: 3px;
+            background: rgba(255,255,255,0.35);
+            padding: 0.875rem 1.125rem;
+            font-size: 0.8rem; color: var(--muted); line-height: 1.6;
+            margin-bottom: 2.25rem;
+        }
+        .question {
+            border-left: 2px solid var(--accent);
+            padding: 0.25rem 0 0.25rem 1.125rem;
+            font-style: italic; color: var(--muted);
+            font-size: 0.9rem; line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        article p { font-size: 0.9rem; line-height: 1.75; margin-bottom: 1.125rem; }
+        article a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--rule); transition: border-color 0.15s; }
+        article a:hover { border-color: var(--accent); }
+        blockquote {
+            font-family: 'Libre Caslon Display', serif;
+            font-size: 1.05rem; line-height: 1.55; color: var(--ink);
+            padding: 0.25rem 0 0.25rem 1.125rem;
+            border-left: 2px solid var(--rule);
+            margin: 1.5rem 0;
+        }
+        h2 {
+            font-family: 'Libre Caslon Display', serif;
+            font-size: 1.3rem; font-weight: 400; line-height: 1.3;
+            margin: 2.25rem 0 0.875rem;
+        }
+        h3 {
+            font-size: 0.85rem; font-weight: 600; color: var(--ink);
+            margin: 1.625rem 0 0.5rem;
+        }
+        .postscript {
+            margin-top: 3rem; padding-top: 2rem;
+            border-top: 1px solid var(--rule);
+        }
+        .postscript-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 1rem;
+        }
+        footer {
+            max-width: 680px; margin: 0 auto;
+            padding: 1.25rem 1.75rem;
+            font-size: 0.72rem; color: var(--faint);
+            border-top: 1px solid var(--rule);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+        @media print { body::after { display: none; } }
+    </style>
+</head>
+<body>
+
+<main>
+    <a class="back" href="../index.html">&larr; rajeev kotha</a>
+
+    <p class="kicker">Post &middot; Grid flexibility</p>
+    <h1>When utilities control the equipment: grid-interactive efficient buildings in practice</h1>
+    <p class="meta">May 2022 &middot; postscript July 2026 &middot; 8 min read</p>
+
+    <div class="provenance">
+        Adapted from an advisory answer I wrote for member utilities during my time
+        at E&nbsp;Source (May 2022), lightly edited for the web with the member question
+        paraphrased. The original programme examples are preserved as a snapshot of
+        that moment; a postscript at the end traces where the field went next.
+    </div>
+
+    <article>
+        <p class="question">
+            We are interested in grid-interactive efficient buildings (GEBs). Can you
+            share examples of utility pilots or programmes where the utility directly
+            controls equipment inside buildings &mdash; thermal storage, HVAC controls,
+            connected lighting, EV charging, solar PV, battery storage? What are the
+            main challenges, and how would you overcome them?
+        </p>
+
+        <p>
+            In 2022, the benefits of grid-interactive efficient buildings were still being
+            established through small-scale implementations and pilots. The US Department
+            of Energy&rsquo;s
+            <a href="https://gebroadmap.lbl.gov/" rel="noopener noreferrer">national GEB roadmap</a>,
+            released in May 2021, set out recommendations for building-sector stakeholders
+            to unlock savings by combining energy efficiency with demand flexibility.
+            DOE&rsquo;s
+            <a href="https://www.energy.gov/eere/buildings/grid-interactive-efficient-buildings" rel="noopener noreferrer">Building Technologies Office</a>
+            summarised the ambition well:
+        </p>
+
+        <blockquote>
+            &ldquo;The GEB vision is the integration and continuous optimization of DERs
+            for the benefit of building owners and occupants, as well as the grid.&rdquo;
+        </blockquote>
+
+        <p>
+            The programme design split by building size. For homes and small commercial
+            buildings, smart energy management programmes promoted and incentivised
+            individual smart devices. Large commercial buildings needed more complex
+            offerings &mdash; integrated energy management information systems (EMIS) with
+            advanced sensors and controls. NYSERDA&rsquo;s Real-Time Energy Management
+            (RTEM) programme, for instance, paid incentives to large commercial and
+            multifamily customers purchasing EMIS from qualified vendors.
+        </p>
+        <p>
+            A few utilities went further and offered a single streamlined programme
+            spanning both efficiency and demand response: NV&nbsp;Energy&rsquo;s Business
+            Solutions Center helped commercial customers identify and install efficiency
+            measures and smart thermostats, then auto-enrolled qualifying devices into
+            demand-response programmes. But that was the exception. As the American
+            Council for an Energy-Efficient Economy (ACEEE) documented at the time, most
+            utility programmes remained segregated, with separate goals for efficiency
+            and for grid flexibility.
+        </p>
+
+        <h2>What direct control looked like on the ground</h2>
+
+        <h3>Software-based control of DERs</h3>
+        <p>
+            In April 2022, National Grid New York announced a pilot with Leap, a
+            distributed energy resource software platform, at four New York City office
+            buildings &mdash; aiming, per the press release, to &ldquo;reduce New York&rsquo;s
+            dependency on the least efficient and most expensive electrical generation
+            options, increase grid stability, and bring down the cost of electricity for
+            all.&rdquo; Edo, a startup focused on building-to-grid integration, was working
+            with Avista on several demonstration projects across the US.
+        </p>
+
+        <h3>Subscription bundles</h3>
+        <p>
+            Mirroring the Netflix model, Uplight launched Plus &mdash; packaging multiple
+            utility programmes around customer needs, from efficiency programme enrolment
+            to smart-thermostat optimisation via demand response &mdash; piloted with AES,
+            Duke Energy, and others.
+        </p>
+
+        <h3>Automated demand response</h3>
+        <p>
+            Pacific Gas &amp; Electric&rsquo;s WatterSaver pilot with Virtual Peaker set out
+            to install or retrofit Wi-Fi-enabled heat pump water heaters across five to
+            nine thousand customers &mdash; heating water when grid power was clean and
+            plentiful, storing it for when it wasn&rsquo;t. Duke Energy Carolina&rsquo;s
+            EnergyWise Business programme provided free smart thermostats and Wi-Fi
+            switches for HVAC equipment, installation included. In the Pacific Northwest,
+            a collaborative pilot by Bonneville Power Administration, Portland General
+            Electric, and NEEA quantified the peak-reduction and load-shifting value of
+            grid-connected water heaters.
+        </p>
+
+        <h3>Behavioural outreach</h3>
+        <p>
+            National Grid sent personalised energy-use reports to customers in
+            Massachusetts and New York, with device-specific insights and demand-response
+            promotion tailored to the equipment and usage profiles in each home.
+        </p>
+
+        <h3>Building management systems as a service</h3>
+        <p>
+            CPower, working with NYISO, launched building-management-system-as-a-service:
+            advanced analytics with tenant-by-tenant, floor-by-floor control &mdash; pitched
+            partly at New York&rsquo;s Local Law 97 compliance market.
+        </p>
+
+        <h2>What held these programmes back</h2>
+        <p>
+            The biggest barrier was <strong>valuation</strong>: determining the fair,
+            transparent value of combined efficiency and grid benefits, and making sure
+            building owners and occupants could see why participation was worth it.
+            Programme <strong>silos</strong> compounded this &mdash; efficiency and demand
+            flexibility lived in separate programmes with separate goals and separate
+            cost-effectiveness tests. And <strong>technological maturity</strong> was a
+            real constraint: coordinated whole-building automation responding to grid
+            signals was still an emerging capability, then under evaluation in
+            demonstration programmes like GSA&rsquo;s Proving Ground.
+        </p>
+
+        <h2>The way forward, as it looked from 2022</h2>
+        <p>
+            Four things needed to happen. Aggregation had to scale &mdash; at the device,
+            vendor, and building level &mdash; to bring down the cost of grid-responsive
+            sophistication. Rate structures had to be redesigned so the financial value of
+            flexibility was clear and could be locked in over equipment investment
+            lifecycles. Valuation frameworks had to catch up, with approaches for
+            demonstrating cost-effectiveness of GEB measures emerging from Pacific
+            Northwest National Laboratory. And collaboration test beds &mdash; individual
+            buildings, campuses, commercial developments &mdash; were needed to validate
+            demand-flexibility performance and demonstrate value to both the utility
+            system and building owners, as Lawrence Berkeley National Laboratory argued.
+        </p>
+    </article>
+
+    <div class="postscript">
+        <p class="postscript-label">Postscript &mdash; July 2026</p>
+        <article>
+            <p>
+                Four years on, the clearest change is the banner the work happens under:
+                what the 2021 roadmap called grid-interactive efficient buildings has
+                largely consolidated into the <strong>virtual power plant</strong> framing.
+                The behind-the-meter flexible capacity that pilots like these seeded has
+                become an asset class &mdash;
+                <a href="https://www.woodmac.com/press-releases/virtual-power-plant-capacity-expands-13.7-year-over-year-to-reach-37.5-gw" rel="noopener noreferrer">Wood Mackenzie puts US VPP capacity at 37.5&nbsp;GW</a>,
+                growing about 14% a year, and
+                <a href="https://www.utilitydive.com/news/virtual-power-plant-vpp-doe-liftoff-tesla-voltus/693525/" rel="noopener noreferrer">DOE&rsquo;s Pathways to Commercial Liftoff analysis</a>
+                argues that tripling that to 80&ndash;160&nbsp;GW by 2030 could cover
+                10&ndash;20% of peak demand and save roughly $10&nbsp;billion a year in
+                grid costs.
+            </p>
+            <p>
+                The motivation shifted too. In 2022 the case for grid-interactive buildings
+                was framed mostly around decarbonisation and avoided peaker dispatch. Today
+                it is framed around <strong>capacity adequacy</strong>: with data centres,
+                re-shored manufacturing, and electrified heating and transport pushing US
+                peak demand from roughly 800&nbsp;GW towards 900&nbsp;GW by 2030, flexible
+                buildings stopped being a nice-to-have and became one of the few resources
+                that can show up in time.
+            </p>
+            <p>
+                What has aged least well is the market plumbing.
+                <a href="https://www.ferc.gov/ferc-order-no-2222-explainer-facilitating-participation-electricity-markets-distributed-energy" rel="noopener noreferrer">FERC Order 2222</a>
+                &mdash; the rule meant to open wholesale markets to aggregated building-scale
+                resources &mdash; is still being implemented unevenly: CAISO completed
+                compliance in late 2024, while PJM&rsquo;s timeline has slipped toward
+                2027&ndash;28. And the barrier I called out in the original answer &mdash;
+                fair, transparent valuation of stacked efficiency and flexibility benefits
+                &mdash; remains
+                <a href="https://www.utilitydive.com/news/in-2026-virtual-power-plants-must-scale-or-risk-being-left-behind/810321/" rel="noopener noreferrer">the binding constraint on scale</a>.
+                The technology matured faster than the incentives. That was true in 2022;
+                it is still true now.
+            </p>
+        </article>
+    </div>
+</main>
+
+<footer>
+    Rajeev Kotha &middot; 2026 &middot; <a href="../index.html">home</a>
+</footer>
+
+</body>
+</html>
