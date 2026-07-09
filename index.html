@@ -3,17 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rajeev Kotha</title>
+    <title>Rajeev Kotha &mdash; Building Energy &amp; Data Science</title>
     <meta name="description" content="Rajeev Kotha - Building Energy and Data Science. Vancouver, BC.">
 
     <!-- Robots -->
     <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://darthrajha.github.io/">
 
     <!-- Open Graph -->
     <meta property="og:type"        content="website">
-    <meta property="og:title"       content="Rajeev Kotha">
+    <meta property="og:title"       content="Rajeev Kotha — Building Energy &amp; Data Science">
     <meta property="og:description" content="Building energy and data science. I model buildings and build tools that help decarbonise them.">
-    <meta property="og:url"         content="https://darthrajha.github.io">
+    <meta property="og:url"         content="https://darthrajha.github.io/">
+    <meta property="og:image"       content="https://darthrajha.github.io/og-image.png">
+    <meta property="og:image:width"  content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt"   content="Rajeev Kotha — Building energy, data science, decarbonisation. Vancouver, BC.">
+
+    <!-- Twitter -->
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="Rajeev Kotha — Building Energy &amp; Data Science">
+    <meta name="twitter:description" content="Building energy and data science. I model buildings and build tools that help decarbonise them.">
+    <meta name="twitter:image"       content="https://darthrajha.github.io/og-image.png">
 
     <!-- Mobile browser chrome colour -->
     <meta name="theme-color" content="#F5EDD8">
@@ -229,6 +240,8 @@
             transition: color 0.15s, text-decoration-color 0.15s;
         }
         .pub-title:hover { color: var(--accent); text-decoration-color: var(--accent); }
+        .pub-title-static { text-decoration: none; }
+        .pub-title-static:hover { color: var(--ink); }
         .pub-meta {
             font-size: 0.75rem; color: var(--faint); margin-top: 0.2rem;
         }
@@ -351,6 +364,13 @@
             transition: color 0.15s, border-color 0.15s, background 0.15s;
         }
         .chart-modal-close:hover { color: var(--ink); border-color: var(--faint); background: rgba(255,255,255,0.4); }
+        .chart-modal-openlink {
+            font-size: 0.68rem; font-family: 'IBM Plex Mono', monospace;
+            color: var(--accent); text-decoration: none;
+            border-bottom: 1px solid transparent; white-space: nowrap;
+            transition: border-color 0.15s;
+        }
+        .chart-modal-openlink:hover { border-color: var(--accent); }
         .chart-modal-body { padding: 0.5rem; }
         .chart-frame {
             width: 100%; border: none; border-radius: 2px; display: block;
@@ -452,6 +472,29 @@
             .cred-right { text-align: left; }
         }
     </style>
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Rajeev Kotha",
+      "url": "https://darthrajha.github.io/",
+      "jobTitle": "Data Scientist & Building Energy Specialist",
+      "worksFor": { "@type": "Organization", "name": "OPEN Technologies", "url": "https://opentech.eco/" },
+      "address": { "@type": "PostalAddress", "addressLocality": "Vancouver", "addressRegion": "BC", "addressCountry": "CA" },
+      "alumniOf": [
+        { "@type": "CollegeOrUniversity", "name": "University of Illinois at Urbana-Champaign" },
+        { "@type": "CollegeOrUniversity", "name": "Delhi Technological University" }
+      ],
+      "knowsAbout": ["Building energy modelling", "Data science", "Building decarbonisation", "EnergyPlus", "Machine learning", "Solar PV"],
+      "sameAs": [
+        "https://linkedin.com/in/rajeevkotha",
+        "https://github.com/Darthrajha",
+        "https://orcid.org/0000-0002-7317-3688"
+      ]
+    }
+    </script>
 </head>
 <body>
 
@@ -470,7 +513,7 @@
         </p>
         <p class="intro-bio secondary">
             Research background at UVic&#8217;s Energy in Cities group in surrogate modelling and building
-            archetype clustering. Consulting on building electrification at E Source.
+            archetype clustering. Consulted on building electrification at E Source.
             Buildings policy and community solar work in between.
             M.Eng in Energy Systems from <a href="https://energysystemsmeng.grainger.illinois.edu/" target="_blank" rel="noopener noreferrer">UIUC</a>.
         </p>
@@ -508,10 +551,10 @@
     <!-- TABS -->
     <div class="tabs-bar" role="tablist" aria-label="Profile sections">
         <button class="tab-btn active" role="tab" aria-selected="true"  aria-controls="tab-exp"     data-tab="tab-exp">Experience</button>
+        <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-portfolio" data-tab="tab-portfolio">Portfolio</button>
         <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-writing"  data-tab="tab-writing">Writing</button>
         <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-skills"   data-tab="tab-skills">Skills</button>
         <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-edu"      data-tab="tab-edu">Education</button>
-        <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-portfolio" data-tab="tab-portfolio">Portfolio</button>
     </div>
 
     <!-- EXPERIENCE -->
@@ -618,161 +661,6 @@
         </div>
     </div>
 
-    <!-- WRITING -->
-    <div class="tab-panel" id="tab-writing" role="tabpanel">
-
-        <p class="s-label">Peer-reviewed</p>
-        <ul class="pub-list">
-            <li class="pub-item">
-                <span class="pub-n">1</span>
-                <div>
-                    <a href="https://www.researchgate.net/publication/364323230_A_clustering_framework_to_identify_non-residential_building_archetypes_using_subsystem-level_targeting"
-                       target="_blank" rel="noopener noreferrer" class="pub-title">
-                        A clustering framework to identify non-residential building archetypes using subsystem-level targeting
-                    </a>
-                    <p class="pub-meta">12th eSim Building Simulation Conference (IBPSA-Canada) &middot; Ottawa, Canada &middot; June 2022</p>
-                    <p class="pub-meta">Energy in Cities, University of Victoria</p>
-                </div>
-            </li>
-            <li class="pub-item">
-                <span class="pub-n">2</span>
-                <div>
-                    <a href="https://www.researchgate.net/publication/373676751_Time-Resolved_Neural_Network_Surrogate_Models_as_Digital_Twins"
-                       target="_blank" rel="noopener noreferrer" class="pub-title">
-                        Time-resolved neural network surrogate models as digital twins
-                    </a>
-                    <p class="pub-meta">5th International Conference on Building Energy and Environment (COBEE 2022) &middot; Montreal, Canada &middot; July 2022</p>
-                    <p class="pub-meta">Energy in Cities, University of Victoria</p>
-                </div>
-            </li>
-        </ul>
-
-        <p class="s-label" style="margin-top: 2rem;">Projects</p>
-        <ul class="pub-list">
-            <li class="pub-item">
-                <span class="pub-n">1</span>
-                <div>
-                    <a href="https://ceme.ece.illinois.edu/projects/solar-decathlon-illinois-china-competition/"
-                       target="_blank" rel="noopener noreferrer" class="pub-title">
-                        Solar Decathlon China 2018 - Waterside Cube
-                    </a>
-                    <p class="pub-meta">SJTU&#8211;UIUC Joint Team &middot; Dezhou, China &middot; 2018</p>
-                    <p class="pub-meta" style="margin-top: 0.3rem; color: var(--muted); font-size: 0.825rem; line-height: 1.6;">
-                        Part of the University of Illinois team that partnered with Shanghai Jiao Tong University for the U.S. DOE and China NEA-sponsored competition. The joint entry drew on traditional Chinese courtyard dwelling typologies and integrated passive design strategies, prefabricated modular construction, PV panels, and an evaporative HVAC system.
-                    </p>
-                </div>
-            </li>
-        </ul>
-
-        <p class="s-label" style="margin-top: 2rem;">Reports</p>
-        <ul class="pub-list">
-            <li class="pub-item">
-                <span class="pub-n">1</span>
-                <div>
-                    <a href="https://cee1.org/images/pdf/2019_AIR_Report_1.pdf"
-                       target="_blank" rel="noopener noreferrer" class="pub-title">
-                        2019 State of the Efficiency Program Industry
-                    </a>
-                    <p class="pub-meta">Consortium for Energy Efficiency &middot; 2019</p>
-                </div>
-            </li>
-            <li class="pub-item">
-                <span class="pub-n">2</span>
-                <div>
-                    <a href="https://www.pembina.org/pub/reframed-initiative-outcomes-analysis"
-                       target="_blank" rel="noopener noreferrer" class="pub-title">
-                        Reframed Initiative Outcomes Analysis
-                    </a>
-                    <p class="pub-meta">Pembina Institute &middot; buildings policy and energy systems</p>
-                </div>
-            </li>
-        </ul>
-
-        <p class="s-label" style="margin-top: 2rem;">Exchanges</p>
-        <ul class="pub-list">
-            <li class="pub-item">
-                <span class="pub-n">1</span>
-                <div>
-                    <a href="https://www.linkedin.com/in/rajeevkotha/overlay/Position/2020892353/treasury/?profileId=ACoAAAaxd1wBfUjnlQpd-gbSL2bGPJ_tyguogL4"
-                       target="_blank" rel="noopener noreferrer" class="pub-title">
-                        Navigating building electrification from technical, financial, and regulatory viewpoints
-                    </a>
-                    <p class="pub-meta">E Source Exchange &middot; March 29, 2023</p>
-                    <p class="pub-meta">With Bryan Jungers &middot; Customer Energy Solutions, E Source</p>
-                </div>
-            </li>
-        </ul>
-
-    </div>
-
-    <!-- SKILLS -->
-    <div class="tab-panel" id="tab-skills" role="tabpanel">
-        <div class="skill-table">
-
-            <p class="skill-group">Engineering</p>
-            <div class="skill-row">
-                <span class="skill-cat">Building physics</span>
-                <span class="skill-vals">Heat transfer, building envelopes, HVAC systems, AHUs, FCUs, chillers, boilers, ASHRAE 90.1 / 55 / 62.1</span>
-            </div>
-            <div class="skill-row">
-                <span class="skill-cat">Simulation</span>
-                <span class="skill-vals">EnergyPlus, BESOS, building energy modelling, parametric analysis, surrogate modelling, archetype clustering</span>
-            </div>
-
-            <p class="skill-group">Software</p>
-            <div class="skill-row">
-                <span class="skill-cat">Programming</span>
-                <span class="skill-vals">Python, SQL, machine learning, neural networks, time-series analysis, dashboard development</span>
-            </div>
-
-            <p class="skill-group">Domain</p>
-            <div class="skill-row">
-                <span class="skill-cat">Renewables and M&amp;V</span>
-                <span class="skill-vals">PVsyst, SAM, solar PV modelling, measurement and verification, demand-side management, energy auditing</span>
-            </div>
-
-            <p class="skill-group">Professional</p>
-            <div class="skill-row">
-                <span class="skill-cat">Communication</span>
-                <span class="skill-vals">Client consulting, technical presentations, stakeholder briefings, white papers, business development</span>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- EDUCATION -->
-    <div class="tab-panel" id="tab-edu" role="tabpanel">
-
-        <p class="s-label">Education</p>
-        <div class="cred-table">
-            <div class="cred-row">
-                <span class="cred-name">Master of Engineering in Energy Systems &middot; University of Illinois at Urbana-Champaign</span>
-                <span class="cred-right">2018</span>
-            </div>
-            <div class="cred-row">
-                <span class="cred-name">Bachelor of Technology in Mechanical Engineering &middot; Delhi Technological University</span>
-                <span class="cred-right">2015</span>
-            </div>
-        </div>
-
-        <p class="s-label">Certifications</p>
-        <div class="cred-table">
-            <div class="cred-row">
-                <span class="cred-name">Certified Passive House Tradesperson (Building Envelope)</span>
-                <span class="cred-right">iPHA</span>
-            </div>
-            <div class="cred-row">
-                <span class="cred-name">LEED Green Associate</span>
-                <span class="cred-right">GBCI</span>
-            </div>
-            <div class="cred-row">
-                <span class="cred-name">NABCEP PV Associate</span>
-                <span class="cred-right">NABCEP</span>
-            </div>
-        </div>
-
-    </div>
-
     <!-- PORTFOLIO -->
     <div class="tab-panel" id="tab-portfolio" role="tabpanel">
 
@@ -849,6 +737,160 @@
 
     </div>
 
+    <!-- WRITING -->
+    <div class="tab-panel" id="tab-writing" role="tabpanel">
+
+        <p class="s-label">Peer-reviewed</p>
+        <ul class="pub-list">
+            <li class="pub-item">
+                <span class="pub-n">1</span>
+                <div>
+                    <a href="https://www.researchgate.net/publication/364323230_A_clustering_framework_to_identify_non-residential_building_archetypes_using_subsystem-level_targeting"
+                       target="_blank" rel="noopener noreferrer" class="pub-title">
+                        A clustering framework to identify non-residential building archetypes using subsystem-level targeting
+                    </a>
+                    <p class="pub-meta">12th eSim Building Simulation Conference (IBPSA-Canada) &middot; Ottawa, Canada &middot; June 2022</p>
+                    <p class="pub-meta">Energy in Cities, University of Victoria</p>
+                </div>
+            </li>
+            <li class="pub-item">
+                <span class="pub-n">2</span>
+                <div>
+                    <a href="https://www.researchgate.net/publication/373676751_Time-Resolved_Neural_Network_Surrogate_Models_as_Digital_Twins"
+                       target="_blank" rel="noopener noreferrer" class="pub-title">
+                        Time-resolved neural network surrogate models as digital twins
+                    </a>
+                    <p class="pub-meta">5th International Conference on Building Energy and Environment (COBEE 2022) &middot; Montreal, Canada &middot; July 2022</p>
+                    <p class="pub-meta">Energy in Cities, University of Victoria</p>
+                </div>
+            </li>
+        </ul>
+
+        <p class="s-label" style="margin-top: 2rem;">Projects</p>
+        <ul class="pub-list">
+            <li class="pub-item">
+                <span class="pub-n">1</span>
+                <div>
+                    <a href="https://ceme.ece.illinois.edu/projects/solar-decathlon-illinois-china-competition/"
+                       target="_blank" rel="noopener noreferrer" class="pub-title">
+                        Solar Decathlon China 2018 - Waterside Cube
+                    </a>
+                    <p class="pub-meta">SJTU&#8211;UIUC Joint Team &middot; Dezhou, China &middot; 2018</p>
+                    <p class="pub-meta" style="margin-top: 0.3rem; color: var(--muted); font-size: 0.825rem; line-height: 1.6;">
+                        Part of the University of Illinois team that partnered with Shanghai Jiao Tong University for the U.S. DOE and China NEA-sponsored competition. The joint entry drew on traditional Chinese courtyard dwelling typologies and integrated passive design strategies, prefabricated modular construction, PV panels, and an evaporative HVAC system.
+                    </p>
+                </div>
+            </li>
+        </ul>
+
+        <p class="s-label" style="margin-top: 2rem;">Reports</p>
+        <ul class="pub-list">
+            <li class="pub-item">
+                <span class="pub-n">1</span>
+                <div>
+                    <a href="https://cee1.org/images/pdf/2019_AIR_Report_1.pdf"
+                       target="_blank" rel="noopener noreferrer" class="pub-title">
+                        2019 State of the Efficiency Program Industry
+                    </a>
+                    <p class="pub-meta">Consortium for Energy Efficiency &middot; 2019</p>
+                </div>
+            </li>
+            <li class="pub-item">
+                <span class="pub-n">2</span>
+                <div>
+                    <a href="https://www.pembina.org/pub/reframed-initiative-outcomes-analysis"
+                       target="_blank" rel="noopener noreferrer" class="pub-title">
+                        Reframed Initiative Outcomes Analysis
+                    </a>
+                    <p class="pub-meta">Pembina Institute &middot; buildings policy and energy systems</p>
+                </div>
+            </li>
+        </ul>
+
+        <p class="s-label" style="margin-top: 2rem;">Exchanges</p>
+        <ul class="pub-list">
+            <li class="pub-item">
+                <span class="pub-n">1</span>
+                <div>
+                    <span class="pub-title pub-title-static">
+                        Navigating building electrification from technical, financial, and regulatory viewpoints
+                    </span>
+                    <p class="pub-meta">E Source Exchange &middot; March 29, 2023</p>
+                    <p class="pub-meta">With Bryan Jungers &middot; Customer Energy Solutions, E Source</p>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+
+    <!-- SKILLS -->
+    <div class="tab-panel" id="tab-skills" role="tabpanel">
+        <div class="skill-table">
+
+            <p class="skill-group">Engineering</p>
+            <div class="skill-row">
+                <span class="skill-cat">Building physics</span>
+                <span class="skill-vals">Heat transfer, building envelopes, HVAC systems, AHUs, FCUs, chillers, boilers, ASHRAE 90.1 / 55 / 62.1</span>
+            </div>
+            <div class="skill-row">
+                <span class="skill-cat">Simulation</span>
+                <span class="skill-vals">EnergyPlus, BESOS, building energy modelling, parametric analysis, surrogate modelling, archetype clustering</span>
+            </div>
+
+            <p class="skill-group">Software</p>
+            <div class="skill-row">
+                <span class="skill-cat">Programming</span>
+                <span class="skill-vals">Python, SQL, machine learning, neural networks, time-series analysis, dashboard development</span>
+            </div>
+
+            <p class="skill-group">Domain</p>
+            <div class="skill-row">
+                <span class="skill-cat">Renewables and M&amp;V</span>
+                <span class="skill-vals">PVsyst, SAM, solar PV modelling, measurement and verification, demand-side management, energy auditing</span>
+            </div>
+
+            <p class="skill-group">Professional</p>
+            <div class="skill-row">
+                <span class="skill-cat">Communication</span>
+                <span class="skill-vals">Client consulting, technical presentations, stakeholder briefings, white papers, business development</span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="tab-panel" id="tab-edu" role="tabpanel">
+
+        <p class="s-label">Education</p>
+        <div class="cred-table">
+            <div class="cred-row">
+                <span class="cred-name">Master of Engineering in Energy Systems &middot; University of Illinois at Urbana-Champaign</span>
+                <span class="cred-right">2018</span>
+            </div>
+            <div class="cred-row">
+                <span class="cred-name">Bachelor of Technology in Mechanical Engineering &middot; Delhi Technological University</span>
+                <span class="cred-right">2015</span>
+            </div>
+        </div>
+
+        <p class="s-label">Certifications</p>
+        <div class="cred-table">
+            <div class="cred-row">
+                <span class="cred-name">Certified Passive House Tradesperson (Building Envelope)</span>
+                <span class="cred-right">iPHA</span>
+            </div>
+            <div class="cred-row">
+                <span class="cred-name">LEED Green Associate</span>
+                <span class="cred-right">GBCI</span>
+            </div>
+            <div class="cred-row">
+                <span class="cred-name">NABCEP PV Associate</span>
+                <span class="cred-right">NABCEP</span>
+            </div>
+        </div>
+
+    </div>
+
 </main>
 
 <!-- CHART MODAL -->
@@ -859,6 +901,7 @@
             <p class="chart-modal-cap" id="chart-modal-cap"></p>
             <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0;">
                 <span id="chart-nav-hint" aria-hidden="true" style="font-size:0.65rem;font-family:'IBM Plex Mono',monospace;color:var(--faint);letter-spacing:0.05em;"></span>
+                <a id="chart-modal-open" class="chart-modal-openlink" href="#" target="_blank" rel="noopener noreferrer">full page &#8599;</a>
                 <button class="chart-modal-close" data-close aria-label="Close chart">&times;</button>
             </div>
         </div>
@@ -901,6 +944,7 @@
     const modalBody = document.getElementById('chart-modal-body');
     const modalCap  = document.getElementById('chart-modal-cap');
     const navHint   = document.getElementById('chart-nav-hint');
+    const modalOpen = document.getElementById('chart-modal-open');
     const cards     = [...document.querySelectorAll('.proj-card')];
     let lastFocused = null;
     let currentIdx  = -1;
@@ -911,6 +955,7 @@
         currentIdx  = idx;
         lastFocused = card;
         modalCap.innerHTML = card.dataset.chartCap || '';
+        modalOpen.href = card.dataset.chartSrc;
 
         // Position hint: show arrows only where navigation is possible
         if (cards.length > 1) {
