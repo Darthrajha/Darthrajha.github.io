@@ -980,7 +980,7 @@
 </div>
 
 <footer>
-    Rajeev Kotha &middot; 2026
+    Rajeev Kotha &middot; 2026<span id="visit-count" hidden> &middot; <span id="visit-count-n"></span></span>
 </footer>
 
 <script>
@@ -1125,6 +1125,17 @@
         }
     });
 
+    /* ── Visit count in the footer: shown only if the counter service answers ── */
+    fetch('https://darthrajha.goatcounter.com/counter/TOTAL.json')
+        .then(r => r.ok ? r.json() : null)
+        .then(d => {
+            if (!d || !d.count) return;
+            document.getElementById('visit-count-n').textContent =
+                d.count + (d.count === '1' ? ' visit' : ' visits');
+            document.getElementById('visit-count').hidden = false;
+        })
+        .catch(() => { /* blocked or offline: the footer simply stays as it is */ });
+
     /* ── Easter egg: click the horizon, the wind picks up ── */
     const sky = document.querySelector('.skyline');
     if (sky) {
@@ -1143,6 +1154,9 @@
     console.log('%cTip: click the horizon at the bottom of the page. Wind included.',
         'font-family:monospace;font-size:11px;color:#AE9882;');
 </script>
+
+<!-- Privacy-friendly visit counting (GoatCounter: no cookies, no personal data) -->
+<script data-goatcounter="https://darthrajha.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 
 </body>
 </html>
