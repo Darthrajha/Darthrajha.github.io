@@ -32,10 +32,28 @@
     <!-- Favicon: RK monogram -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23F5EDD8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Georgia%2C serif' font-size='14' font-weight='600' fill='%232D1B0E'%3ERK%3C/text%3E%3C/svg%3E">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="preload" href="./fonts/ibm-plex-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="./fonts/libre-caslon-display-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Marks that scripting is available; without it every section is shown stacked -->
+    <script>document.documentElement.className = 'js';</script>
     <style>
+        /* ── Fonts: self-hosted Latin subsets (no third-party requests) ── */
+        @font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 400 600; font-display: swap;
+            src: url('./fonts/ibm-plex-sans-latin.woff2') format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+        @font-face { font-family: 'IBM Plex Sans'; font-style: italic; font-weight: 400; font-display: swap;
+            src: url('./fonts/ibm-plex-sans-italic-latin.woff2') format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+        @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap;
+            src: url('./fonts/ibm-plex-mono-400-latin.woff2') format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+        @font-face { font-family: 'Libre Caslon Display'; font-style: normal; font-weight: 400; font-display: swap;
+            src: url('./fonts/libre-caslon-display-400-latin.woff2') format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+        @font-face { font-family: 'Permanent Marker'; font-style: normal; font-weight: 400; font-display: swap;
+            src: url('./fonts/permanent-marker-400-latin.woff2') format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
         /* ── Variables ── */
         :root {
             --bg:       #F5EDD8;
@@ -68,6 +86,8 @@
             z-index: 9999;
             opacity: 0.04;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            /* Fixed-size tile: rendered once and repeated, instead of re-rasterising at viewport size */
+            background-size: 512px 512px;
         }
 
 
@@ -169,8 +189,11 @@
         .tab-btn:first-child { padding-left: 0; }
 
         /* ── Panels ── */
-        .tab-panel { display: none; }
-        .tab-panel.active {
+        /* Without JavaScript all panels show, stacked; with it they become tabs */
+        .tab-panel + .tab-panel { margin-top: 2.5rem; }
+        html:not(.js) .tabs-bar { display: none; }
+        .js .tab-panel { display: none; margin-top: 0; }
+        .js .tab-panel.active {
             display: block;
             animation: tab-fade-in 0.15s ease;
         }
@@ -305,11 +328,13 @@
             display: block; width: 100%; text-align: left;
             position: relative;
             font-family: inherit; cursor: pointer;
+            color: inherit; text-decoration: none;
             background: rgba(255, 255, 255, 0.35);
             border: 1px solid var(--rule); border-radius: 3px;
             padding: 1.125rem 1.25rem 1.1875rem;
             transition: border-color 0.15s, box-shadow 0.18s, transform 0.18s, background 0.15s;
         }
+        .tab-panel a.proj-card { font-weight: 400; }
         .proj-card:hover {
             border-color: var(--faint);
             background: rgba(255, 255, 255, 0.55);
@@ -648,7 +673,7 @@
                     <span class="exp-period">2019 &#8211; 2020</span>
                 </div>
                 <p class="exp-org">
-                    <a href="https://www.cee1.org/" target="_blank" rel="noopener noreferrer">Consortium for Energy Efficiency</a> &middot; Middleton, MA, USA
+                    <a href="https://cee1.org/" target="_blank" rel="noopener noreferrer">Consortium for Energy Efficiency</a> &middot; Middleton, MA, USA
                 </p>
                 <p class="exp-desc">Owned the <a href="https://cee1.org/images/pdf/2019_AIR_Report_1.pdf" target="_blank" rel="noopener noreferrer">2019 State of the Efficiency Program Industry</a> on the Evaluation Research and Behaviour team, the flagship multi-utility programme performance and savings-verification deliverable across North American member utilities. Synthesised performance data across the efficiency industry, analysing how utility programmes are designed, measured, and verified.</p>
             </article>
@@ -696,8 +721,8 @@
 
         <div class="proj-grid">
 
-            <button class="proj-card"
-                    data-chart-src="./charts/canada-affordable-available-rental.html"
+            <a class="proj-card"
+                    href="./charts/canada-affordable-available-rental.html"
                     data-chart-cap="Affordable &amp; available rental homes per 100 lowest-income renter households, by province &amp; territory · 2021 Census of Population"
                     aria-haspopup="dialog">
                 <p class="proj-cat">Data visualization &middot; Housing &amp; Affordability</p>
@@ -711,10 +736,10 @@
                 <span class="proj-open" aria-hidden="true">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </span>
-            </button>
+            </a>
 
-            <button class="proj-card"
-                    data-chart-src="./charts/canada-households-without-ac.html"
+            <a class="proj-card"
+                    href="./charts/canada-households-without-ac.html"
                     data-chart-cap="Households without air conditioning, by province &middot; 2021 Households and the Environment Survey, Statistics Canada"
                     aria-haspopup="dialog">
                 <p class="proj-cat">Data visualization &middot; Housing &amp; Climate</p>
@@ -727,10 +752,10 @@
                 <span class="proj-open" aria-hidden="true">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </span>
-            </button>
+            </a>
 
-            <button class="proj-card"
-                    data-chart-src="./charts/canada-residential-ghg-per-household.html"
+            <a class="proj-card"
+                    href="./charts/canada-residential-ghg-per-household.html"
                     data-chart-cap="Residential GHG emissions per household, by province &middot; on-site fossil fuel combustion &middot; 2023 NRCan Comprehensive Energy Use Database"
                     aria-haspopup="dialog">
                 <p class="proj-cat">Data visualization &middot; Energy &amp; Climate</p>
@@ -743,10 +768,10 @@
                 <span class="proj-open" aria-hidden="true">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </span>
-            </button>
+            </a>
 
-            <button class="proj-card"
-                    data-chart-src="./charts/rtem-beit.html"
+            <a class="proj-card"
+                    href="./charts/rtem-beit.html"
                     data-chart-cap="BEIT: Building Energy Intensity Toolchain &middot; NYSERDA RTEM Hackathon &middot; Technical Demonstration &middot; 2022"
                     aria-haspopup="dialog">
                 <p class="proj-cat">Analytical tool &middot; Energy &amp; Climate</p>
@@ -759,7 +784,7 @@
                 <span class="proj-open" aria-hidden="true">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </span>
-            </button>
+            </a>
 
         </div>
 
@@ -959,11 +984,11 @@
 </footer>
 
 <script>
-    /* ── Tab switching ── */
-    const tabBtns   = document.querySelectorAll('.tab-btn');
+    /* ── Tab switching (each tab has a shareable address: #portfolio, #writing, …) ── */
+    const tabBtns   = [...document.querySelectorAll('.tab-btn')];
     const tabPanels = document.querySelectorAll('.tab-panel');
 
-    function activateTab(btn) {
+    function activateTab(btn, { focus = false, updateHash = true } = {}) {
         tabBtns.forEach(b => {
             b.classList.remove('active');
             b.setAttribute('aria-selected', 'false');
@@ -972,16 +997,26 @@
         btn.classList.add('active');
         btn.setAttribute('aria-selected', 'true');
         document.getElementById(btn.dataset.tab).classList.add('active');
+        if (focus) btn.focus();
+        if (updateHash) {
+            try { history.replaceState(null, '', '#' + btn.dataset.tab.replace('tab-', '')); } catch (err) {}
+        }
+    }
+
+    function tabFromHash() {
+        const btn = tabBtns.find(b => b.dataset.tab === 'tab-' + location.hash.slice(1));
+        if (btn) activateTab(btn, { updateHash: false });
     }
 
     tabBtns.forEach(btn => btn.addEventListener('click', () => activateTab(btn)));
+    window.addEventListener('hashchange', tabFromHash);
+    tabFromHash();
 
     /* Keyboard navigation */
     document.querySelector('.tabs-bar').addEventListener('keydown', e => {
-        const all = [...tabBtns];
-        const idx = all.indexOf(document.querySelector('.tab-btn.active'));
-        if (e.key === 'ArrowRight') { e.preventDefault(); activateTab(all[(idx + 1) % all.length]); }
-        if (e.key === 'ArrowLeft')  { e.preventDefault(); activateTab(all[(idx - 1 + all.length) % all.length]); }
+        const idx = tabBtns.indexOf(document.querySelector('.tab-btn.active'));
+        if (e.key === 'ArrowRight') { e.preventDefault(); activateTab(tabBtns[(idx + 1) % tabBtns.length], { focus: true }); }
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); activateTab(tabBtns[(idx - 1 + tabBtns.length) % tabBtns.length], { focus: true }); }
     });
 
     /* ── Chart modal: open snippet → full interactive chart ── */
@@ -991,38 +1026,70 @@
     const navHint   = document.getElementById('chart-nav-hint');
     const modalOpen = document.getElementById('chart-modal-open');
     const cards     = [...document.querySelectorAll('.proj-card')];
+    const frameHeights = new Map();   // remembered per chart so a reopen does not jump
+    let frameObserver = null;
     let lastFocused = null;
     let currentIdx  = -1;
+
+    function setFrameHeight(f, contentHeight) {
+        if (!(contentHeight > 0)) return;
+        const h = Math.ceil(contentHeight) + 20;
+        f.style.height = h + 'px';
+        frameHeights.set(f.getAttribute('src'), h);
+    }
+
+    function onModalKey(e) {
+        if (modal.hidden) return;
+        if (e.key === 'Escape')     { closeChart(); return; }
+        if (e.key === 'ArrowRight') { e.preventDefault(); openChart((currentIdx + 1) % cards.length); }
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); openChart((currentIdx - 1 + cards.length) % cards.length); }
+    }
+
+    // Hook into a same-origin chart frame once its document exists. Called on load and again when the
+    // chart reports its height, because an embedded video can hold the load event back for seconds.
+    function wireFrame(f) {
+        if (f.dataset.wired) return;
+        try {
+            const doc = f.contentDocument;
+            if (!doc || !doc.body || doc.URL === 'about:blank') return;
+            f.dataset.wired = '1';
+            setFrameHeight(f, doc.body.scrollHeight);
+            // Keys pressed while focus is inside the chart never reach this page, so listen there too
+            doc.addEventListener('keydown', onModalKey);
+            // Follow the chart's height as it reflows (window resize, phone rotation)
+            if ('ResizeObserver' in window) {
+                frameObserver = new ResizeObserver(() => setFrameHeight(f, doc.body.scrollHeight));
+                frameObserver.observe(doc.body);
+            }
+        } catch (err) { /* cross-origin or not ready: the postMessage fallback still sizes the frame */ }
+    }
 
     function openChart(idx) {
         const card = cards[idx];
         if (!card) return;
+        const src = card.getAttribute('href');
         currentIdx  = idx;
         lastFocused = card;
         modalCap.innerHTML = card.dataset.chartCap || '';
-        modalOpen.href = card.dataset.chartSrc;
+        modalOpen.href = src;
 
         // Position hint: show arrows only where navigation is possible
         if (cards.length > 1) {
-            const prev = idx > 0              ? '←' : '  ';
-            const next = idx < cards.length-1 ? '→' : '  ';
+            const prev = idx > 0              ? '←' : '  ';
+            const next = idx < cards.length-1 ? '→' : '  ';
             navHint.textContent = `${prev}  ${idx + 1} / ${cards.length}  ${next}`;
         }
 
-        // Build the iframe fresh each open so it loads while visible (and reports its true height)
+        // Build the iframe fresh each open so embedded video stops when the modal closes
+        if (frameObserver) { frameObserver.disconnect(); frameObserver = null; }
         modalBody.innerHTML = '';
         const f = document.createElement('iframe');
         f.className = 'chart-frame';
         f.setAttribute('scrolling', 'no');
         f.setAttribute('title', 'Interactive chart');
-        f.style.height = '1500px';
-        f.src = card.dataset.chartSrc;
-        f.addEventListener('load', () => {
-            try {
-                const h = f.contentDocument && f.contentDocument.body.scrollHeight;
-                if (h) f.style.height = (h + 20) + 'px';
-            } catch (err) { /* fall back to postMessage */ }
-        });
+        f.style.height = (frameHeights.get(src) || 900) + 'px';
+        f.src = src;
+        f.addEventListener('load', () => wireFrame(f));
         modalBody.appendChild(f);
         modal.hidden = false;
         document.body.style.overflow = 'hidden';
@@ -1030,6 +1097,7 @@
     }
 
     function closeChart() {
+        if (frameObserver) { frameObserver.disconnect(); frameObserver = null; }
         modal.hidden = true;
         modalBody.innerHTML = '';
         document.body.style.overflow = '';
@@ -1037,25 +1105,22 @@
         currentIdx = -1;
     }
 
-    cards.forEach((card, i) => card.addEventListener('click', () => openChart(i)));
+    // Cards are real links to the chart pages; a plain click opens the modal instead.
+    cards.forEach((card, i) => card.addEventListener('click', e => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        e.preventDefault();
+        openChart(i);
+    }));
     modal.querySelectorAll('[data-close]').forEach(el =>
         el.addEventListener('click', closeChart));
-    document.addEventListener('keydown', e => {
-        if (modal.hidden) return;
-        if (e.key === 'Escape')     { closeChart(); return; }
-        if (e.key === 'ArrowRight') { e.preventDefault(); openChart((currentIdx + 1) % cards.length); }
-        if (e.key === 'ArrowLeft')  { e.preventDefault(); openChart((currentIdx - 1 + cards.length) % cards.length); }
-    });
+    document.addEventListener('keydown', onModalKey);
 
     /* ── Auto-size chart iframes via postMessage (fallback for the modal frame) ── */
     window.addEventListener('message', e => {
+        if (e.origin !== location.origin) return;
         if (e.data && e.data.type === 'chart-height' && e.data.height > 0) {
             document.querySelectorAll('.chart-frame').forEach(f => {
-                try {
-                    if (f.contentWindow === e.source) {
-                        f.style.height = (e.data.height + 20) + 'px';
-                    }
-                } catch(err) {}
+                if (f.contentWindow === e.source) { setFrameHeight(f, e.data.height); wireFrame(f); }
             });
         }
     });
